@@ -1,0 +1,16 @@
+
+\section{Soft Actor-Critic (SAC) Framework}
+
+The core control algorithm employed in this study is Soft Actor-Critic (SAC), an off-policy actor-critic deep reinforcement learning method developed by Haarnoja et al. \cite{Haarnoja2018}. SAC was selected primarily for its stability and ample exploration capabilities in continuous action spaces, attributes that are critical for the non-convex and stochastic nature of microgrid energy management.
+
+Unlike standard reinforcement learning algorithms that seek to maximize only the expected cumulative reward, SAC optimizes a maximum entropy objective. The standard objective is augmented with an entropy term $H(\pi(\cdot|s_t))$, which encourages the policy to behave as randomly as possible while still maximizing the reward. The objective function $J(\pi)$ is defined as:
+
+\begin{equation}
+    J(\pi) = \sum_{t=0}^{T} \mathbb{E}_{(s_t, a_t) \sim \rho_\pi} \left[ r(s_t, a_t) + \alpha H(\pi(\cdot|s_t)) \right]
+\end{equation}
+
+where $\alpha$ is a temperature parameter that determines the relative importance of the entropy term against the reward, thus controlling the stochasticity of the optimal policy. This entropy regularization provides a substantial advantage in the context of energy management. It prevents the agent from converging prematurely to a suboptimal deterministic policy (such as a simple "charge at night, discharge at day" heuristic) and instead encourages the exploration of diverse strategies that may yield higher long-term returns under uncertainty.
+
+The algorithm utilizes two coupled neural networks: the "Actor" network $\pi_\phi$, which outputs the mean and standard deviation of a Gaussian distribution for the action, and the "Critic" network $Q_\theta$, which estimates the soft Q-value of a state-action pair. To mitigate the overestimation bias common in functional approximation, SAC employs a "clipped double-Q learning" technique, where two independent critic networks are trained, and the minimum Q-value between them is used for the policy update.
+
+The policy parameters $\phi$ are updated by minimizing the Kullback-Leibler (KL) divergence between the policy distribution and the exponential of the soft Q-function. This is achieved using the reparameterization trick, where the action is sampled as $a_t = \tanh(\mu_\phi(s_t) + \sigma_\phi(s_t) \cdot \epsilon)$, with $\epsilon \sim \mathcal{N}(0, I)$. This differentiability allows gradients to flow directly from the critic to the actor, enabling efficient and stable learning of complex battery control policies.

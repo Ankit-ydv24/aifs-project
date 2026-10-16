@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "Microgrid Energy Management with Reinforcement Learning"
+version: "1.0.0"
+date-released: "2026-03-04"
+license: MIT
+url: "https://github.com/kerberker/microgrid-rl-energy-management"
+repository-code: "https://github.com/kerberker/microgrid-rl-energy-management.git"
+doi: "10.5281/zenodo.18859278"
+authors:
+  - family-names: "Çetinkaya"
+    given-names: "Berker"
+    affiliation: "Istanbul Technical University"
+keywords:
+  - microgrid
+  - reinforcement learning
+  - energy management
+  - battery storage
+  - soft actor-critic
+  - proximal policy optimization
+  - linear programming
+  - demand response
+abstract: >-
+  A reinforcement learning framework for optimal energy management
+  in residential microgrids with battery energy storage systems.
+  Implements SAC, PPO, and Robust SAC agents benchmarked against
+  a Linear Programming optimal solution, with comprehensive
+  robustness analysis under forecast uncertainty.

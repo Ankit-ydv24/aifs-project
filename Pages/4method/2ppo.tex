@@ -1,0 +1,12 @@
+
+\section{Proximal Policy Optimization (PPO) Framework}
+
+To provide a robust baseline for evaluating the performance of the proposed SAC agent, this study essentially employs the Proximal Policy Optimization (PPO) algorithm \cite{Raffin2021}. PPO is an on-policy gradient method that strikes a balance between ease of implementation, sample complexity, and ease of tuning. Unlike SAC, which reuses past experiences stored in a replay buffer (off-policy), PPO learns directly from the current policy's interactions, making it generally more stable but less sample-efficient.
+
+The defining characteristic of PPO is its objective function, which is designed to prevent destructive large policy updates. It employs a "clipped surrogate objective" that limits the change in the policy ratio $r_t(\theta) = \frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{old}}(a_t|s_t)}$ between the new and old policies. The objective function is given by:
+
+\begin{equation}
+    L^{CLIP}(\theta) = \hat{\mathbb{E}}_t \left[ \min \left( r_t(\theta)\hat{A}_t, \text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon)\hat{A}_t \right) \right]
+\end{equation}
+
+where $\hat{A}_t$ is the estimated advantage at time $t$, and $\epsilon$ is a hyperparameter (typically set to $0.2$) that defines the clipping range. This mechanism ensures that the new policy does not deviate excessively from the old one, providing a "trust region" optimizing step that guarantees monotonic improvement in performance. In the context of microgrid control, PPO serves as a strong benchmark to validate whether the additional complexity and entropy-regularization of SAC translate into statistically significant gains.

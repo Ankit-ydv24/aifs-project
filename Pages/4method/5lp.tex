@@ -1,0 +1,32 @@
+
+\section{Benchmark I: Linear Programming Formulation}
+
+To rigorously evaluate the performance of the proposed DRL agents, it is essential to establish a theoretical upper bound on the achievable economic performance. This is accomplished by formulating the energy management problem as a Linear Programming (LP) optimization. By assuming perfect foresight of all future solar generation, load demand, and electricity prices over the optimization horizon (24 hours), the LP solver calculates the globally optimal battery schedule that minimizes the total operational cost.
+
+The objective function is defined to minimize the sum of energy costs, degradation costs, and peak demand penalties over the horizon $T$:
+
+\begin{equation}
+    \min_{P_{c}, P_{d}, P_{grid}^{+}, P_{grid}^{-}} \sum_{t=1}^{T} \left( \lambda_t P_{grid, t}^{+} - \lambda_{feed-in, t} P_{grid, t}^{-} + \beta_{deg}(P_{c, t}\eta_c + \frac{P_{d, t}}{\eta_d}) + \rho_{peak} P_{peak, t} \right)
+\end{equation}
+
+Subject to the following constraints:
+
+\textbf{1. Power Balance:} At each time step, the power supplied by the grid plus local generation and storage discharge must equal the load plus battery charging:
+\begin{equation}
+    P_{grid, t}^{+} - P_{grid, t}^{-} + P_{pv, t} + P_{d, t} = P_{load, t} + P_{c, t}
+\end{equation}
+
+\textbf{2. State of Charge Dynamics:} The energy stored in the battery evolves according to the charging and discharging power flows, accounting for conversion efficiencies ($\eta_c, \eta_d$):
+\begin{equation}
+    E_{t+1} = E_t + (P_{c, t}\eta_c - \frac{P_{d, t}}{\eta_d}) \Delta t
+\end{equation}
+
+\textbf{3. Physical Limits:} The battery power and energy must remain within the manufacturer's rated limits:
+\begin{equation}
+    0 \leq P_{c, t} \leq P_{max}, \quad 0 \leq P_{d, t} \leq P_{max}
+\end{equation}
+\begin{equation}
+    E_{min} \leq E_t \leq E_{max}
+\end{equation}
+
+Although this "Offline Optimal" solution is unattainable in practice due to forecast uncertainty, it provides the "Golden Standard" against which the "Optimality Gap" of the online SAC and PPO agents is measured.

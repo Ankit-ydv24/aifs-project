@@ -1,0 +1,32 @@
+{
+  "title": "Microgrid Energy Management with Reinforcement Learning",
+  "description": "A reinforcement learning framework for optimal energy management in residential microgrids with battery energy storage systems. Implements SAC, PPO, and Robust SAC agents benchmarked against a Linear Programming optimal solution, with comprehensive robustness analysis under forecast uncertainty.",
+  "upload_type": "software",
+  "creators": [
+    {
+      "name": "Çetinkaya, Berker",
+      "affiliation": "Istanbul Technical University"
+    }
+  ],
+  "access_right": "open",
+  "license": "MIT",
+  "keywords": [
+    "microgrid",
+    "reinforcement learning",
+    "energy management",
+    "battery energy storage",
+    "soft actor-critic",
+    "proximal policy optimization",
+    "linear programming",
+    "demand response",
+    "smart grid"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/kerberker/microgrid-rl-energy-management",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ],
+  "version": "1.0.0"
+}

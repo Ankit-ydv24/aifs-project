@@ -1,0 +1,12 @@
+
+\section{Overview of Energy Management Systems}
+
+The operation of a microgrid involves a complex interplay of various control loops operating at different time scales. To manage this complexity, the control architecture is typically standardized into a hierarchical structure consisting of three distinct levels: primary, secondary, and tertiary control \cite{Guerrero2011}.
+
+Primary control, often referred to as local control, operates on a millisecond time scale. It is responsible for the immediate stabilization of voltage and frequency through local droop control mechanisms and inner current loops. This level ensures that inverters share load proportionally and maintain the system's stability without requiring communication with a central controller \cite{Olivares2014}.
+
+Secondary control operates on a slower time scale, typically ranging from seconds to minutes. Its primary function is to restore the voltage and frequency deviations caused by the primary control's droop characteristics. It ensures that the power quality remains within the strict limits defined by grid codes and synchronizes the microgrid with the main utility grid prior to reconnection.
+
+Tertiary control, which is the focus of this thesis, represents the highest level of the hierarchy and is synonymous with the Energy Management System (EMS). Operating on a time scale of minutes to hours, the EMS is responsible for the economic optimization of the microgrid. It determines the optimal power set-points for Distributed Energy Resources (DERs) and storage systems to achieve specific objectives, such as minimizing operational costs or maximizing self-consumption \cite{Zia2018}.
+
+The EMS acts as the brain of the microgrid, processing external data such as electricity prices, weather forecasts, and load signals to make strategic decisions. The effectiveness of an EMS is fundamentally determined by the control strategy it employs to solve this optimization problem. As detailed in recent reviews \cite{turn0search2}, these strategies have evolved from simple rule-based logic to sophisticated mathematical optimization and, more recently, to data-driven learning approaches.

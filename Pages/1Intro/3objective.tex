@@ -1,0 +1,14 @@
+
+\section{Objective}
+
+The primary objective of this thesis is to develop, implement, and evaluate a robust Deep Reinforcement Learning framework for the optimal energy management of a residential microgrid. Specifically, this study aims to minimize the operational cost (electricity bills) of a prosumer equipped with a PV system and battery storage under dynamic Time-of-Use pricing, despite the presence of forecast uncertainties.
+
+To achieve this main goal, several specific sub-objectives are defined:
+
+To achieve this main goal, several specific sub-objectives are defined. First, the study necessitates the development of a custom simulation environment. This involves designing a comprehensive Gymnasium-based reinforcement learning framework that accurately models microgrid physics, including battery degradation, power flow constraints, and dynamic pricing structures.
+
+Second, the research aims to implement and train advanced Deep Reinforcement Learning agents. This includes deploying Soft Actor-Critic (SAC) and Proximal Policy Optimization (PPO) algorithms, and proposing a "Robust SAC" (R-SAC) variant specifically trained with domain randomization to handle forecast errors effectively.
+
+Third, a rigorous performance benchmark must be established. By using Linear Programming (LP) with perfect foresight, the study will quantify the "Optimality Gap" for each agent. This metric provides a clear indication of how closely the learning-based agents approach the theoretical mathematical optimum.
+
+Finally, the study seeks to evaluate robustness systematically. The agents will be subjected to varying levels of forecast noise, simulating prediction errors in solar generation, to assess their stability and reliability in realistic, imperfect conditions.

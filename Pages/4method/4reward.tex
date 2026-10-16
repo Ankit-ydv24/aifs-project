@@ -1,0 +1,44 @@
+\section{Reward Function Design}
+
+The design of the reward function plays a critical role in aligning the learning behavior of the reinforcement learning agent with the operational objectives of the energy management system. In this study, the primary objective is to minimize the total operational cost of the residential microgrid while respecting physical and operational constraints. Since reinforcement learning agents aim to maximize cumulative rewards, the instantaneous reward $r_t$ at time step $t$ is defined as the negative of the total operational cost incurred during that time step:
+
+\begin{equation}
+r_t = -C_t = - \left( C_{\text{grid},t} + C_{\text{deg},t} + C_{\text{peak},t} \right)
+\end{equation}
+
+This formulation ensures a direct correspondence between economic cost minimization and reward maximization, thereby avoiding misalignment between the learning objective and the system-level performance metric.
+
+The total cost $C_t$ consists of three components, each representing a distinct operational consideration:
+
+\textbf{1. Grid Energy Cost ($C_{\text{grid},t}$):}  
+This term represents the direct financial cost of importing electricity from the grid or the revenue obtained from exporting surplus energy. It is calculated based on the net power exchange with the grid $P_{\text{grid},t}$ and the applicable electricity tariff:
+
+\begin{equation}
+C_{\text{grid},t} =
+\begin{cases}
+P_{\text{grid},t} \cdot \lambda_t, & \text{if } P_{\text{grid},t} \geq 0 \quad \text{(Import)} \\
+P_{\text{grid},t} \cdot \lambda_{\text{feed-in},t}, & \text{if } P_{\text{grid},t} < 0 \quad \text{(Export)}
+\end{cases}
+\end{equation}
+
+where $\lambda_t$ denotes the Time-of-Use electricity price, and $\lambda_{\text{feed-in},t}$ is the feed-in tariff. The feed-in tariff is assumed to be lower than the retail price (e.g., $\lambda_{\text{feed-in},t} = 0.4\,\lambda_t$), reflecting common residential net-metering policies and discouraging excessive grid injection.
+
+\textbf{2. Battery Degradation Cost ($C_{\text{deg},t}$):}  
+To discourage excessive and unnecessary battery cycling, a degradation-related penalty is introduced based on the battery energy throughput. This simplified linear degradation model captures the intuition that increased charge and discharge activity accelerates battery wear:
+
+\begin{equation}
+C_{\text{deg},t} = \left| P_{\text{bat},t} \right| \cdot \Delta t \cdot \beta_{\text{deg}}
+\end{equation}
+
+where $\beta_{\text{deg}}$ represents the estimated degradation cost per unit of energy cycled. Although this model does not explicitly capture detailed electrochemical aging mechanisms, it provides an effective proxy for incorporating battery health considerations into the control policy in a computationally efficient manner.
+
+\textbf{3. Peak Demand Penalty ($C_{\text{peak},t}$):}  
+To reduce large power draw spikes from the utility grid, which may stress local distribution infrastructure, an additional penalty is applied when the grid import power exceeds a predefined soft limit $P_{\text{peak}}^{\text{limit}}$:
+
+\begin{equation}
+C_{\text{peak},t} = \max \left( 0,\, P_{\text{grid},t} - P_{\text{peak}}^{\text{limit}} \right) \cdot \rho_{\text{peak}}
+\end{equation}
+
+where $\rho_{\text{peak}}$ is a weighting coefficient that determines the severity of the penalty. This term encourages smoother grid interaction and complements the economic objective without introducing hard constraints that could hinder learning.
+
+Overall, the composite reward function balances short-term economic gains from energy arbitrage with long-term considerations such as battery longevity and grid-friendly operation. By structuring the reward directly in monetary units, the agent’s learned policy remains interpretable and aligned with real-world operational objectives. The values for the weighting coefficients $\beta_{\text{deg}}$ and $\rho_{\text{peak}}$, along with the penalty thresholds, were selected based on preliminary empirical tuning to ensure a balanced trade-off between the conflicting objectives of minimizing operational costs and preserving system longevity.

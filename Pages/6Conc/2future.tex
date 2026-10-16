@@ -1,0 +1,12 @@
+
+\section{Future Work}
+
+While this thesis establishes a robust framework for single-agent microgrid control, several avenues remain for future research to extend these findings toward more complex and realistic scenarios.
+
+\textbf{1. Multi-Agent Peer-to-Peer Trading:} The current study focuses on optimizing a single residential prosumer. A natural extension is to scale this approach to a community level, where multiple prosumers equipped with R-SAC agents interact in a local energy market. Future work will investigate the emergence of cooperative behaviors and the stability of the grid when multiple autonomous agents compete for limited network capacity while trading energy peer-to-peer.
+
+\textbf{2. Hardware-in-the-Loop (HIL) Validation:} To bridge the final gap between simulation and deployment, the proposed algorithms should be validated on a hardware testbed. This would involve deploying the trained neural networks onto an embedded edge device (e.g., Raspberry Pi or NVIDIA Jetson) controlling a real hybrid inverter. Such a setup would verify the agent's inference latency and its ability to handle real-world communication delays and sensor noise.
+
+\textbf{3. Multi-Modal State Inputs:} The current state space relies on numerical time-series data. Incorporating multi-modal inputs, such as sky images for cloud tracking or textual weather reports, could significantly enhance the agent's situational awareness. Deep learning architectures like Convolutional Neural Networks (CNNs) or Transformers could be integrated into the SAC policy to process these high-dimensional inputs, potentially improving the agent's ability to anticipate sudden overlapping changes in solar generation.
+
+\textbf{4. Advanced Battery Modeling:} The simplified linear degradation model used in this study could be replaced with high-fidelity electrochemical models that account for non-linear aging phenomena, such as Solid Electrolyte Interphase (SEI) growth and lithium plating. Additionally, incorporating thermal dynamics would allow the agent to manage battery temperature, further optimizing lifespan and safety in extreme climates.

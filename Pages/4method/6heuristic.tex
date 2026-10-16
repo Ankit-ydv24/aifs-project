@@ -1,0 +1,22 @@
+
+\section{Benchmark II: Heuristic Control Strategy}
+
+In addition to the theoretical upper bound provided by Linear Programming, it is necessary to establish a practical lower bound using a strategy that is implementable in real-time without complex computation. For this purpose, a "Rule-Based" heuristic controller is developed. This controller operates on fixed logical thresholds derived from expert knowledge of the Time-of-Use structure and solar generation patterns.
+
+The control logic prioritizes self-consumption of renewable energy and arbitrage during peak price periods. The decision-making process at each time step $t$ is defined as follows:
+
+\begin{enumerate}
+    \item \textbf{Scenario A: Excess Solar Generation ($P_{pv, t} > P_{load, t}$)}
+    If the local PV generation exceeds the load demand, the controller attempts to store the excess energy in the battery to avoid curtailment or low-value feed-in, provided the State of Charge (SoC) is below a maximum threshold (e.g., 90\%):
+    $$ P_{bat, t} = \min(P_{pv, t} - P_{load, t}, P_{max}) $$
+    
+    \item \textbf{Scenario B: Net Load Demand ($P_{pv, t} < P_{load, t}$)}
+    If there is a net deficit of power, the decision depends on the current electricity price $\lambda_t$:
+    \begin{itemize}
+        \item \textbf{Peak Price Period:} If $\lambda_t$ exceeds a pre-defined high-price threshold (e.g., \$0.15/kWh) and the battery has sufficient charge ($SoC > 20\%$), the battery discharges to meet the load, reducing expensive grid imports:
+        $$ P_{bat, t} = -\min(P_{load, t} - P_{pv, t}, P_{max}) $$
+        \item \textbf{Off-Peak Period:} If the price is low, the controller preserves battery capacity for future peaks and satisfies the demand directly from the grid ($P_{bat, t} = 0$).
+    \end{itemize}
+\end{enumerate}
+
+This strategy represents a standard industry-baseline "Smart Controller." While effective at performing basic arbitrage, its inability to anticipate future variations or adapt its thresholds dynamically serves as a competitive baseline to demonstrate the value of the DRL agent's learning capability.

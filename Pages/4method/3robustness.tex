@@ -1,0 +1,20 @@
+
+\section{Robustness Enhancement: Domain Randomization}
+
+A critical challenge in deploying Reinforcement Learning policies to real-world power systems is the "Sim-to-Real" gap. A policy trained on a deterministic simulation with perfect forecasts often fails when exposed to the stochastic realities of actual weather and load patterns. To bridge this gap, this thesis enables "Domain Randomization" \cite{Tobin2017} during the training phase of the SAC agent, yielding a variant denoted as "Robust SAC" (R-SAC).
+
+The central idea is to expose the agent to a wide variety of synthesized "perturbed" environments during training, forcing it to learn a policy that is robust to variations rather than overfitting to a single trajectory. Specifically, this study focuses on forecast uncertainty. While the agent receives the standard "forecast" profiles for solar generation and load as part of its state observation, the actual physical environment it interacts with (which determines the State of Charge evolution) is distorted by noise.
+
+Standard Gaussian white noise, however, fails to capture the persistent nature of weather prediction errors. If a cloud blocks the sun, it is likely to remain cloudy for the subsequent time steps. To model this temporal structure accurately, this study employs an Autoregressive (AR(1)) noise process. The actual solar generation $P_{pv}^{actual}(t)$ is derived from the forecast $P_{pv}^{forecast}(t)$ as:
+
+\begin{equation}
+    P_{pv}^{actual}(t) = P_{pv}^{forecast}(t) \cdot (1 + \delta_t)
+\end{equation}
+
+where the noise term $\delta_t$ evolves according to:
+
+\begin{equation}
+    \delta_t = \phi \cdot \delta_{t-1} + \sqrt{1 - \phi^2} \cdot \xi_t
+\end{equation}
+
+Here, $\phi$ represents the correlation coefficient (set to 0.9) and $\xi_t \sim \mathcal{N}(0, \sigma^2)$ is white noise. This ensures that errors are correlated over time, realistically simulating periods of over- or under-estimation. By training against these correlated perturbations, the R-SAC agent learns to be conservative in its energy planning, effectively guarding against the risk of persistent forecast failures.

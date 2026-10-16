@@ -1,0 +1,8 @@
+
+\section{Data Description and Preparation}
+
+High-quality, real-world data is essential for training robust reinforcement learning agents and validating their performance. This study utilizes residential energy data provided by Pecan Street Inc., specifically from the Dataport repository, which is widely recognized as the world's largest source of disaggregated customer energy data \cite{ref_pecan_street}. The dataset comprises high-resolution electricity consumption and generation measurements collected from heavily instrumented homes located in the Mueller neighborhood of Austin, Texas.
+
+For this research, a specific residential unit identified by the ID \texttt{dataid\_661} was selected due to its complete and high-quality record of both gross load consumption and solar PV generation. The raw data, originally recorded at 15-minute intervals, was pre-processed and resampled to an hourly resolution. This temporal aggregation aligns with the typical decision-making horizon of tertiary control systems and the settlement periods of standard Time-of-Use tariffs.
+
+The simulation spans a full calendar year to capture seasonal variations in solar irradiance and user behavior. The dataset was partitioned into training, validation, and testing sets to ensure that the reported performance metrics reflect the agent's ability to generalize to unseen data rather than memorizing specific days. Missing values, which were minimal, were imputed using linear interpolation to preserve the continuity of the time-series profiles. Additionally, a synthetic TOU price signal was superimposed on the environment, modeling a standard tiered pricing structure with distinct peak and off-peak rates to incentivize load shifting.

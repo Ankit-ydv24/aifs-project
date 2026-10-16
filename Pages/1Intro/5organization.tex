@@ -1,0 +1,14 @@
+
+\section{Organization of the Thesis}
+
+The remainder of this thesis is organized as follows:
+
+The remainder of this thesis is structured to provide a logical progression from theoretical foundations to experimental validation. Chapter 2 provides a comprehensive survey of the existing state-of-the-art in microgrid energy management. It reviews traditional control strategies, including optimization-based and heuristic methods, and discusses the recent advancements in Deep Reinforcement Learning applications for power systems.
+
+Chapter 3 details the mathematical formulation of the microgrid components, including the photovoltaic array, lithium-ion battery storage, and the resident's electrical load. It also describes the data sources used (Pecan Street dataset) and the methodology for constructing the custom OpenAI Gymnasium simulation environment.
+
+Chapter 4 describes the proposed control frameworks. It elucidates the theoretical underpinnings of the Soft Actor-Critic (SAC) and Proximal Policy Optimization (PPO) algorithms. Furthermore, it introduces the design of the "Robust SAC" (R-SAC) agent, detailing the specific domain randomization techniques employed to enhance resilience against forecast uncertainty.
+
+Chapter 5 presents the extensive experimental analysis. It utilizes the "Result Breakdown" metrics to compare the performance of the trained DRL agents against the Linear Programming benchmark and baseline heuristics. This chapter also includes a dedicated robustness analysis, examining agent behavior under varying degrees of solar prediction errors.
+
+Finally, Chapter 6 summarizes the key findings of this research, highlighting the validity of the proposed DRL approach. It concludes by identifying limitations of the current study and proposing avenues for future research, such as multi-agent coordination and hardware-in-the-loop validation.
