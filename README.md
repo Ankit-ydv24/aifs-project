@@ -6,6 +6,12 @@
 
 A reinforcement learning framework for optimal energy management in residential microgrids with battery energy storage systems (BESS). This project implements and compares multiple RL agents against a Linear Programming (LP) benchmark under various forecast uncertainty conditions.
 
+> **About this repository:** This is an AI&FS (Sem VII) course project built on top of
+> [kerberker/microgrid-rl-energy-management](https://github.com/kerberker/microgrid-rl-energy-management)
+> by Berker Çetinkaya (MIT License). The core RL framework, LP benchmark, and thesis chapters are from the
+> original project. Additions in this repository: a re-run of the evaluation (`results_new/`), a data
+> export pipeline, and an interactive 3D web dashboard (see [Interactive Dashboard](#interactive-dashboard)).
+
 ## Features
 
 - **RL Agents**: Soft Actor-Critic (SAC), Proximal Policy Optimization (PPO), Robust SAC (R-SAC with domain randomization)
@@ -19,8 +25,8 @@ A reinforcement learning framework for optimal energy management in residential 
 
 ```bash
 # Clone the repository
-git clone https://github.com/kerberker/microgrid-rl-energy-management.git
-cd microgrid-rl-energy-management
+git clone https://github.com/Ankit-ydv24/aifs-project.git
+cd aifs-project
 
 # Create a virtual environment (recommended)
 python -m venv venv
@@ -57,6 +63,17 @@ If you have trained models in `results/`, you can run standalone robustness test
 python run_robustness_check.py
 ```
 
+### Interactive Dashboard
+
+`dashboard.html` is a self-contained 3D interactive dashboard (Three.js + Chart.js) showing the
+microgrid, agent SOC trajectories, profit comparisons and robustness results from the trained models.
+Open it directly in a browser. To regenerate it from the evaluation plots:
+
+```bash
+python export_web_data.py   # extracts curves/metrics from results_new/*.pdf -> results/dashboard_data.json
+python build_dashboard.py   # injects dashboard_data.json into dashboard.html
+```
+
 ## Project Structure
 
 ```
@@ -78,11 +95,16 @@ python run_robustness_check.py
 ├── regenerate_plots.py         # Regenerate plots from saved models
 ├── report_results.py           # Summary report generation
 ├── extract_profiles.py         # Profile extraction utility
+├── export_web_data.py          # Export plot data to results/dashboard_data.json
+├── build_dashboard.py          # Build the interactive dashboard.html
+├── dashboard.html              # Interactive 3D results dashboard
 ├── requirements.txt            # Python dependencies
 ├── CITATION.cff                # Citation metadata (Zenodo DOI)
 ├── .zenodo.json                # Zenodo metadata
 ├── LICENSE                     # MIT License
 ├── Pages/                      # LaTeX thesis chapters and figures
+├── results_old/                # Results from the original project
+├── results_new/                # Results from our re-run of the pipeline
 └── results/                    # Output directory (generated)
     ├── *.pdf                   # Visualization plots
     ├── *.csv                   # Evaluation results
@@ -113,7 +135,7 @@ The microgrid is configured with a Tesla Powerwall-like battery system:
 
 ## Citation
 
-If you use this software in your research, please cite it:
+This project is based on the original work by Berker Çetinkaya. If you use this software in your research, please cite it:
 
 ```bibtex
 @software{microgrid_rl_2026,
